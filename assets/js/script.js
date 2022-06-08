@@ -201,27 +201,25 @@ var myTimer = function(){
    for(var i=dis_hour+1;i<24;i++){
     $('#row'+i).css('background', '#77dd77');
   }
-
   }
-  for(var i=0;i<dis_hour;i++){
-    disableRow(i);
-  }
+    for(var i=0;i<dis_hour;i++){
+      disableRow(i);
+    }
   } 
   else{
     for(var i=0;i<24;i++){
       $('#row'+i).css('background', '#77dd77');
     }
-  }
+  } 
  
- 
-  if (weekday>0 && weekday<6) temp="yellow";
-  else temp="";
-  
-    for(i=9;i<18;i++){
+  if (weekday>0 && weekday<6) 
+    temp="yellow";
+  else 
+    temp="";
+      for(i=9;i<18;i++){
     $('#list_textE'+i).css('background', temp);
     }
-  
-}
+  }
 
 
 var enableRow = function(row){
