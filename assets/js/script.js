@@ -172,7 +172,7 @@ $('#abc').on("click", function() {
   Task_List=[];
   DataObj = {text: "Wake Up", date: "06/07/2022", time: "1", taskid:1};    
   Task_List.push(DataObj);
-  localStorage.setItem("Data_Storage", JSON.stringify({text: "Wake Up", date: "06/07/2022", time: 1, taskid:1}));
+  localStorage.setItem("Data_Storage", JSON.stringify({text: "Wake Up", date: "06/07/2022", time: "1", taskid:1}));
   var t= JSON.parse(localStorage.getItem("Data_Storage")); 
   localStorage.setItem("Task_id", 1);
 });
