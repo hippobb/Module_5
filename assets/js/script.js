@@ -51,9 +51,9 @@ var Max_day = new Date(parseInt(today.getFullYear()), parseInt(today.getMonth()+
     if (localStorage.getItem("Task_id")) {
       task_id=parseInt(localStorage.getItem("Task_id"));
       Task_List = JSON.parse(localStorage.getItem("Data_Storage"));
-      for(i=0; i<Task_List.length ;i++){
-         createTask (Task_List[i].text, Task_List[i].date, Task_List[i].time,parseInt(Task_List[i].taskid));
-       }
+     // for(i=0; i<Task_List.length ;i++){
+     //    createTask (Task_List[i].text, Task_List[i].date, Task_List[i].time,parseInt(Task_List[i].taskid));
+      // }
     }
     else localStorage.setItem("Task_id", "0");
     myTimer();
