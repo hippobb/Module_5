@@ -159,9 +159,7 @@ else {
   $('#modalTaskDescription').val(Task_List[match].text);
   dis_time=Task_List[match].time;
   }
-
 $('#modalDueTime').val(dis_time);
-
 });
 
 
