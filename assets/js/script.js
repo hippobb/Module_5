@@ -19,6 +19,7 @@ var DataObj = {
   time: "",
   taskid: "",
 };
+
 var Task_List = [];
 
 document.addEventListener('DOMContentLoaded', function() {createtable();}, false);
@@ -29,7 +30,6 @@ document.getElementById("Current_Date").innerHTML=weekday_name[weekday]+", "+cur
 
 var createtable = function() {
 var Max_day = new Date(parseInt(today.getFullYear()), parseInt(today.getMonth()+1), 0).getDate();
-
   for(i=0;i<24;i++){
       var tr_item=$('<tr id="row'+i+'" class="list-group-item">');
       var td_item=$('<td id="time'+i+'">');
@@ -47,16 +47,18 @@ var Max_day = new Date(parseInt(today.getFullYear()), parseInt(today.getMonth()+
     }
     loadtable();
   }
-  var loadtable = function() {  
-    if (localStorage.getItem("Task_id")) {
+
+var loadtable = function() {  
+  if (localStorage.getItem("Task_id")) {
       task_id=parseInt(localStorage.getItem("Task_id"));
       Task_List = JSON.parse(localStorage.getItem("Data_Storage"));
-     // for(i=0; i<Task_List.length ;i++){
-     //    createTask (Task_List[i].text, Task_List[i].date, Task_List[i].time,parseInt(Task_List[i].taskid));
-      // }
-    }
-    else localStorage.setItem("Task_id", "0");
-    myTimer();
+      for(i=0; i<Task_List.length ;i++){
+      createTask (Task_List[i].text, Task_List[i].date, Task_List[i].time,parseInt(Task_List[i].taskid));
+      }
+  }
+  else 
+    localStorage.setItem("Task_id", "0");
+  myTimer();
 } // close modal
 
 $("#modalDueDate").datepicker({
