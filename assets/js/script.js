@@ -165,7 +165,7 @@ $('#modalDueTime').val(dis_time);
 });
 
 
-$('#abc').on ("click", function(){
+var abc= function(){
   Task_List=[];
   DataObj = {text: "Wake Up", date: "06/07/2022", time: 1, taskid:1};    
   Task_List.push(DataObj);
@@ -173,7 +173,7 @@ $('#abc').on ("click", function(){
   var t= JSON.parse(localStorage.getItem("Data_Storage")); 
   localStorage.setItem("Task_id", 1);
 
-});
+};
 
 
 var myTimer = function(){
