@@ -8,8 +8,10 @@ Basically, it fulfilled the below basic requirement.
 6.	the events is saved in local storage
 
 The date can be selected at the top left corner, once it is selected the page will show the selected day’s event. You can selected all the past day but the table and buttons are disable and read only.
- 
 You can add the new task or edit/ delete existing task. As request the time slot will be displayed the status past, present, or future. 
- 
+If the selected day is weekday the business hour will be changed to yellow but not apply on Saturday or Sunday.  
 You can edit the task and re-schedule to other day, once the save button is pressed the data will be store in local storage.
+
+The source code: https://github.com/hippobb/Module_5
+The Web Link : https://hippobb.github.io/Module_5/
  
