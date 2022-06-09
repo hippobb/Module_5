@@ -27,7 +27,7 @@ document.body.style.overflow = 'hidden';
 $('#diaplayDate').val(now);
 document.getElementById("Current_Date").innerHTML=weekday_name[weekday]+", "+current_date+ " " +month_name[current_month-1]+", "+current_year;
 
-
+//Create the Table structure
 var createtable = function() {
 var Max_day = new Date(parseInt(today.getFullYear()), parseInt(today.getMonth()+1), 0).getDate();
   for(i=0;i<24;i++){
@@ -48,6 +48,7 @@ var Max_day = new Date(parseInt(today.getFullYear()), parseInt(today.getMonth()+
     loadtable();
   }
 
+// load the data to the table
 var loadtable = function() {  
   if (localStorage.getItem("Task_id")) {
       task_id=parseInt(localStorage.getItem("Task_id"));
@@ -59,16 +60,18 @@ var loadtable = function() {
   else 
     localStorage.setItem("Task_id", "0");
   myTimer();
-} // close modal
+} 
 
 $("#modalDueDate").datepicker({
   // force user to select a future date
   minDate: new Date()
 });
 
+// Select the calender display date
 $("#diaplayDate").datepicker({
 });
 
+//Select date change
 $("#diaplayDate").change(function() {
   var date_array;
   var temp;
@@ -76,31 +79,32 @@ $("#diaplayDate").change(function() {
   current_date=date_array[1];
   current_month=date_array[0];
   current_year=date_array[2];
-
   document.getElementById("Current_Date").innerHTML=weekday_name[weekday]+", "+current_date+ " " +month_name[current_month-1]+", "+current_year;
-Refresh_Table();
-myTimer();
-
+  Refresh_Table();
+  myTimer();
 });
+
 
 var Refresh_Table = function(item) {
-$( "li" ).each(function( index ) {
-  temp=$( this ).text();
-  if (temp.includes("Edit"))
-  (this).remove();
-});
-loadtable();
-for(var i=0; i<24;i++){
-enableRow(i);
+  //clear the old data on the table
+  $( "li" ).each(function( index ) {
+    temp=$( this ).text();
+    if (temp.includes("Edit"))
+    (this).remove();
+  });
+  // reload the content
+  loadtable();
+  // enable the row
+  for(var i=0; i<24;i++){
+  enableRow(i);
+  }
 }
-}
 
 
-
+//Remove the task
 var Remove_item = function(item) {
   var del_id=item.getAttribute("taskid");
   var match=0;
-
   Task_List = JSON.parse(localStorage.getItem("Data_Storage"));
   for (var i = 0; i < Task_List.length; i++) {
     if(Task_List[i].taskid==del_id ) match=i;   
@@ -115,20 +119,16 @@ var Remove_item = function(item) {
   item.parentNode.remove();
 }
 
-
+// create the task
 var createTask = function(taskText, taskDate, taskTime,taskid) {
   var temp= $('#time_frame'+taskTime);
   var date_array;
   date_array= taskDate.split("/");  
-
-  
-
   if(taskDate==$("#diaplayDate").val()){
   var listitem = $('<li><input type="text" class="form-input col-5" id="list_text'+taskid+'"  class="list_text" name="task" value='+taskText+' readonly/><button id="edit-task" class="btn  btn-secondary btn-sm col-1"  data-toggle="modal" data-target="#task-form-modal" data-whatever="'+(25+taskid)+'">Edit</button><button id="remove-tasks" class="btn  btn-danger btn-sm col-1"  type="button" onclick="Remove_item(this)" taskid="'+taskid+'">Delete</button></li>');
   temp.append(listitem);
   $('#list_text'+taskid).val(taskText);
   }
-
 };
 
 
@@ -138,32 +138,28 @@ $("#task-form-modal").on("show.bs.modal", function(event) {
   var recipient=$(event.relatedTarget).data('whatever');
   var task_id;
   var match=0;
-  // clear values
   document.getElementById("edit_task").setAttribute("edit","-1");
   $("#modalTaskDescription, #modalDueDate").val("");
   $('#modalDueDate').val($("#diaplayDate").val());
-if (recipient<25) {
-  dis_time=recipient
-  $('#modalDueDate').datepicker().datepicker('disable');
-  $('#modalDueTime').prop('disabled', true);  
-}
-else {
-  
-  $('#modalDueDate').datepicker().datepicker('enable');
-  $('#modalDueTime').prop('disabled', false);  
-  task_id=recipient-25;
-  for (var i = 0; i < Task_List.length; i++) {
-    if(Task_List[i].taskid==task_id ) match=i;
+  //check the task is exisit or not
+  if (recipient<25) {
+    dis_time=recipient
+    $('#modalDueDate').datepicker().datepicker('disable');
+    $('#modalDueTime').prop('disabled', true);  
   }
-  document.getElementById("edit_task").setAttribute("edit",match);
-
- 
-  $('#modalTaskDescription').val(Task_List[match].text);
-  dis_time=Task_List[match].time;
+  else {
+    //create new task
+    $('#modalDueDate').datepicker().datepicker('enable');
+    $('#modalDueTime').prop('disabled', false);  
+    task_id=recipient-25;
+    for (var i = 0; i < Task_List.length; i++) {
+      if(Task_List[i].taskid==task_id ) match=i;
+    }
+    document.getElementById("edit_task").setAttribute("edit",match);  
+    $('#modalTaskDescription').val(Task_List[match].text);
+    dis_time=Task_List[match].time;
   }
-
-$('#modalDueTime').val(dis_time);
-
+  $('#modalDueTime').val(dis_time);
 });
 
 
@@ -172,12 +168,13 @@ $('#abc').on("click", function() {
   Task_List=[];
   DataObj = {text: "Wake Up", date: "06/07/2022", time: "1", taskid:1};    
   Task_List.push(DataObj);
-  localStorage.setItem("Data_Storage", JSON.stringify({text: "Wake Up", date: "06/07/2022", time: 1, taskid:1}));
+  localStorage.setItem("Data_Storage", JSON.stringify(Task_List));
+  console.log("done");
   var t= JSON.parse(localStorage.getItem("Data_Storage")); 
   localStorage.setItem("Task_id", 1);
 });
 
-
+//Function for every 5 mins
 var myTimer = function(){
   var dis_hour;
   today = new Date();
@@ -186,23 +183,21 @@ var myTimer = function(){
   var current_month1=(today.getMonth()+1);
   if (current_month1<10) current_month1="0"+current_month1;
   var current_year1=today.getFullYear();
-  now=current_month1+"/"+current_date1+"/"+current_year1
-  
-  
+  now=current_month1+"/"+current_date1+"/"+current_year1; 
   var date = new Date($("#diaplayDate").val());
   weekday = date.getDay();
   console.log(weekday);
   if (current_date<=today.getDate()){
-  current_hour = today.getHours();
-  if(current_date<today.getDate()) 
-    dis_hour=24;
-  else {
-   dis_hour=current_hour;
-   $('#row'+dis_hour).css('background', '#ff6961');
-   for(var i=dis_hour+1;i<24;i++){
-    $('#row'+i).css('background', '#77dd77');
-  }
-  }
+    current_hour = today.getHours();
+    if(current_date<today.getDate()) 
+      dis_hour=24;
+    else {
+      dis_hour=current_hour;
+      $('#row'+dis_hour).css('background', '#ff6961');
+      for(var i=dis_hour+1;i<24;i++){
+        $('#row'+i).css('background', '#77dd77');
+      }
+    }
     for(var i=0;i<dis_hour;i++){
       disableRow(i);
     }
@@ -212,8 +207,7 @@ var myTimer = function(){
       $('#row'+i).css('background', '#77dd77');
     }
   } 
- 
-  if (weekday>0 && weekday<6) 
+   if (weekday>0 && weekday<6) 
     temp="yellow";
   else 
     temp="";
@@ -257,13 +251,13 @@ $("#task-form-modal .btn-primary").click(function(event) {
   var match;
   var temp;
 
-  if (taskText && taskDate) {
-    
+  if (taskText && taskDate) {    
     console.log((taskDate==now),(taskTime>=current_hour),(taskDate>now));
     console.log(taskDate,now, taskTime, current_hour);
     if(((taskDate==now)&&(taskTime>=current_hour))||(taskDate>now)){
 
       match=parseInt(document.getElementById("edit_task").getAttribute("edit"));
+              //check the task is exist 
               if (match>=0){
                 Task_List[match].text=taskText;
                 Task_List[match].date=taskDate;
@@ -273,7 +267,8 @@ $("#task-form-modal .btn-primary").click(function(event) {
                   Refresh_Table();
                   myTimer();
               }
-              else {            
+              else {         
+                //new task create   
                 createTask(taskText, taskDate, taskTime,task_id);
                 DataObj = {text: taskText, date: taskDate, time: taskTime, taskid:task_id};    
                 Task_List.push(DataObj);
@@ -283,8 +278,6 @@ $("#task-form-modal .btn-primary").click(function(event) {
              }
 
             $("#task-form-modal").modal("hide");
-
-
           }
           }
 
