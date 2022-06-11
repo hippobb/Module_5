@@ -11,7 +11,7 @@ The date can be selected at the top left corner, once it is selected the page wi
 You can add the new task or edit/ delete existing task. As request the time slot will be displayed the status past, present, or future. 
 If the selected day is weekday the business hour will be changed to yellow but not apply on Saturday or Sunday.  
 You can edit the task and re-schedule to other day, once the save button is pressed the data will be store in local storage.
-
+You can add more task in a time slot. 
 The source code: https://github.com/hippobb/Module_5
 The Web Link : https://hippobb.github.io/Module_5/
  

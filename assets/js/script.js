@@ -79,6 +79,7 @@ $("#diaplayDate").change(function() {
   current_date=date_array[1];
   current_month=date_array[0];
   current_year=date_array[2];
+  weekday=today.getDay();
   document.getElementById("Current_Date").innerHTML=weekday_name[weekday]+", "+current_date+ " " +month_name[current_month-1]+", "+current_year;
   Refresh_Table();
   myTimer();
