@@ -74,12 +74,12 @@ $("#diaplayDate").datepicker({
 //Select date change
 $("#diaplayDate").change(function() {
   var date_array;
-  var temp;
+  var temp=new Date($("#diaplayDate").val());
   date_array= $("#diaplayDate").val().split("/");
   current_date=date_array[1];
   current_month=date_array[0];
   current_year=date_array[2];
-  weekday=today.getDay();
+  weekday=temp.getDay();
   document.getElementById("Current_Date").innerHTML=weekday_name[weekday]+", "+current_date+ " " +month_name[current_month-1]+", "+current_year;
   Refresh_Table();
   myTimer();
@@ -170,7 +170,6 @@ $('#abc').on("click", function() {
   DataObj = {text: "Wake Up", date: "06/07/2022", time: "1", taskid:1};    
   Task_List.push(DataObj);
   localStorage.setItem("Data_Storage", JSON.stringify(Task_List));
-  console.log("done");
   var t= JSON.parse(localStorage.getItem("Data_Storage")); 
   localStorage.setItem("Task_id", 1);
 });
@@ -187,7 +186,6 @@ var myTimer = function(){
   now=current_month1+"/"+current_date1+"/"+current_year1; 
   var date = new Date($("#diaplayDate").val());
   weekday = date.getDay();
-  console.log(weekday);
   if (current_date<=today.getDate()){
     current_hour = today.getHours();
     if(current_date<today.getDate()) 
@@ -253,8 +251,6 @@ $("#task-form-modal .btn-primary").click(function(event) {
   var temp;
 
   if (taskText && taskDate) {    
-    console.log((taskDate==now),(taskTime>=current_hour),(taskDate>now));
-    console.log(taskDate,now, taskTime, current_hour);
     if(((taskDate==now)&&(taskTime>=current_hour))||(taskDate>now)){
 
       match=parseInt(document.getElementById("edit_task").getAttribute("edit"));
